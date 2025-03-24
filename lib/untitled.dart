@@ -321,7 +321,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _HeaderButton(
                           text: 'Таблица / Таблица смет',
-                          onTap: () {}, // Пока не реализовано
+                          onTap: () {},
                         ),
                         _HeaderButton(
                           text: 'Справочник работ',
@@ -333,7 +333,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _HeaderButton(
                           text: 'История изменений',
-                          onTap: () {}, // Пока не реализовано
+                          onTap: () {},
                         ),
                       ],
                     ),
