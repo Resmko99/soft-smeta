@@ -367,12 +367,10 @@ class CreateProjectScreen extends StatefulWidget {
 }
 
 class _CreateProjectScreenState extends State<CreateProjectScreen> {
-  // Каждый проект — Map с полями 'name' и 'modules' (список модулей)
   final List<Map<String, dynamic>> projects = [];
   final TextEditingController projectController = TextEditingController();
   int? selectedProjectIndex;
 
-  // Заглушки доступных модулей
   final List<Map<String, dynamic>> availableModules = [
     {'name': 'Модуль авторизации', 'requiredTime': 10},
     {'name': 'Модуль формирования доски', 'requiredTime': 20},
@@ -380,7 +378,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     {'name': 'Модуль подсчёта голосов', 'requiredTime': 12},
   ];
 
-  // Создать новый проект — добавляем новый элемент с пустым списком модулей
   void _createProject() {
     setState(() {
       projects.add({
@@ -392,7 +389,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     });
   }
 
-  // При нажатии на элемент списка проектов делаем его выбранным и отображаем его данные
   void _selectProject(int index) {
     setState(() {
       selectedProjectIndex = index;
@@ -400,7 +396,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     });
   }
 
-  // Сохранить изменения выбранного проекта (обновляем его имя)
   void _saveProject() {
     if (selectedProjectIndex != null && projectController.text.isNotEmpty) {
       setState(() {
@@ -416,7 +411,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     }
   }
 
-  // Добавляем модуль в выбранный проект
   void _addModule(Map<String, dynamic> module) {
     if (selectedProjectIndex == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -425,7 +419,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       return;
     }
     setState(() {
-      // Добавляем копию модуля в список модулей выбранного проекта
       (projects[selectedProjectIndex!]['modules'] as List)
           .add(Map<String, dynamic>.from(module));
     });
@@ -436,7 +429,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     );
   }
 
-  // Подсчитываем итоговое время для выбранного проекта
   int get _totalRequiredTime {
     if (selectedProjectIndex == null) return 0;
     final modules = projects[selectedProjectIndex!]['modules'] as List;
@@ -447,7 +439,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     return total;
   }
 
-  // Кнопка возврата на главный экран
   void _goBack() {
     context.go('/home');
   }
@@ -472,7 +463,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       ),
       body: Column(
         children: [
-          // Постоянная верхняя панель с кнопками (side-bar)
           Container(
             color: const Color(0xFFFF9800),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -493,7 +483,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
           Expanded(
             child: Row(
               children: [
-                // Левая панель – список проектов и данные выбранного проекта
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -524,7 +513,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // Если проект выбран, отображаем его данные
                         if (selectedProjectIndex != null) ...[
                           TextField(
                             controller: projectController,
@@ -563,7 +551,6 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                     ),
                   ),
                 ),
-                // Правая панель – выбор модуля (заглушка)
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -624,7 +611,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
   String selectedSpecialist = 'AN';
   double customerTime = 0;
 
-  // Список специалистов
   final List<Map<String, String>> specialists = [
     {'code': 'AN', 'name': 'Аналитика'},
     {'code': 'DE', 'name': 'Дизайн'},
@@ -636,7 +622,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
     {'code': 'PM', 'name': 'Менеджмент'},
   ];
 
-  // Выбираем работу из списка
   void _selectWork(int index) {
     setState(() {
       selectedWorkIndex = index;
@@ -649,7 +634,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
     });
   }
 
-  // Сохранить изменения или добавить новую работу
   void _saveWork() {
     if (workNameController.text.isEmpty ||
         requiredTimeController.text.isEmpty ||
@@ -685,7 +669,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
     );
   }
 
-  // Очистка полей после сохранения или отмены
   void _clearFields() {
     workNameController.clear();
     requiredTimeController.clear();
@@ -696,7 +679,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
     selectedWorkIndex = null;
   }
 
-  // Обновляем время для заказчика при изменении необходимого времени
   void _updateCustomerTime(String value) {
     final requiredTime = double.tryParse(value) ?? 0;
     setState(() {
@@ -704,7 +686,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
     });
   }
 
-  // Кнопка возврата на главный экран
   void _goBack() {
     context.go('/home');
   }
@@ -729,7 +710,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
       ),
       body: Column(
         children: [
-          // Постоянная верхняя панель с кнопками (side-bar)
           Container(
             color: const Color(0xFFFF9800),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -750,7 +730,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
           Expanded(
             child: Row(
               children: [
-                // Левая панель – список работ
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -787,7 +766,6 @@ class _WorkReferenceScreenState extends State<WorkReferenceScreen> {
                     ),
                   ),
                 ),
-                // Правая панель – форма редактирования/добавления работы
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -890,7 +868,6 @@ class TemplateEstimateScreen extends StatefulWidget {
 }
 
 class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
-  // Список шаблонов смет. Каждый шаблон — Map с 'name' и списком 'phases'
   final List<Map<String, dynamic>> templates = [
     {
       'name': 'смета VPN',
@@ -913,13 +890,12 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
   int? selectedTemplateIndex;
   int? selectedPhaseIndex;
 
-  // Контроллеры для полей формы правой панели
   final TextEditingController phaseNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController devTimeController = TextEditingController(); // время разработки (например, "3д 2ч")
-  final TextEditingController projectOutcomeController = TextEditingController(); // Итог проекта (разработка *2)
-  final TextEditingController laborHoursController = TextEditingController(); // трудоёмкость, ч
-  final TextEditingController laborDaysController = TextEditingController(); // трудоёмкость, д
+  final TextEditingController devTimeController = TextEditingController();
+  final TextEditingController projectOutcomeController = TextEditingController();
+  final TextEditingController laborHoursController = TextEditingController();
+  final TextEditingController laborDaysController = TextEditingController();
   final TextEditingController costController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
@@ -936,7 +912,6 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
     {'code': 'PM', 'name': 'Менеджмент'},
   ];
 
-  // При выборе шаблона сметы и этапа обновляем поля формы (если ранее были сохранены данные)
   void _selectTemplate(int index) {
     setState(() {
       selectedTemplateIndex = index;
@@ -948,11 +923,9 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
   void _selectPhase(int index) {
     setState(() {
       selectedPhaseIndex = index;
-      // Если в будущем храним данные для этапа, их можно подгрузить здесь.
-      // Пока просто заполняем имя этапа:
+
       phaseNameController.text =
       templates[selectedTemplateIndex!]['phases'][index];
-      // Оставляем остальные поля пустыми для ввода
       descriptionController.clear();
       devTimeController.clear();
       projectOutcomeController.clear();
@@ -965,25 +938,19 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
     });
   }
 
-  // При изменении трудоёмкости (в часах) вычисляем время разработки и итог проекта.
   void _updateTimeCalculations(String value) {
     final laborHours = double.tryParse(value) ?? 0;
-    // Пример: 3д 2ч. Допустим, 1 день = 8 часов.
-    // Мы можем вычислить дни и остаток часов:
+
     final days = laborHours ~/ 8;
     final hours = laborHours % 8;
-    // Время разработки = введённые часы, преобразованные в формат "Xd Yh"
     devTimeController.text = '${days}д ${hours.toInt()}ч';
-    // Итог проекта = время разработки * 2 (в днях и часах)
     final totalHours = laborHours * 2;
     final totalDays = totalHours ~/ 8;
     final totalRemainHours = totalHours % 8;
     projectOutcomeController.text = '${totalDays}д ${totalRemainHours.toInt()}ч';
-    // Также запишем трудоёмкость в днях
     laborDaysController.text = totalDays.toString();
   }
 
-  // Очистка полей правой панели
   void _clearPhaseFields() {
     phaseNameController.clear();
     descriptionController.clear();
@@ -997,7 +964,6 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
     selectedSpecialist = 'AN';
   }
 
-  // Функция сохранения этапа (здесь можно добавить логику сохранения в базу)
   void _savePhase() {
     if (phaseNameController.text.isEmpty ||
         descriptionController.text.isEmpty ||
@@ -1012,13 +978,11 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
       );
       return;
     }
-    // Здесь можно сохранить данные этапа в структуру шаблона сметы
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Этап "${phaseNameController.text}" сохранён')),
     );
   }
 
-  // Функция возврата на главный экран
   void _goBack() {
     context.go('/home');
   }
@@ -1043,7 +1007,6 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
       ),
       body: Column(
         children: [
-          // Верхняя панель с кнопками (side-bar)
           Container(
             color: const Color(0xFFFF9800),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -1064,7 +1027,6 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
           Expanded(
             child: Row(
               children: [
-                // Левая панель: список шаблонов смет и этапов
                 Expanded(
                   child: Container(
                     color: Colors.grey[200],
@@ -1124,7 +1086,6 @@ class _TemplateEstimateScreenState extends State<TemplateEstimateScreen> {
                     ),
                   ),
                 ),
-                // Правая панель: форма редактирования этапа
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(16),
